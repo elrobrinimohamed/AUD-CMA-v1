@@ -1,0 +1,78 @@
+**Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD\&CMA)**
+
+---
+
+**Description:**
+The AUD\&CMA is a digit-wise multiplication method for efficiently computing the product of any integer with repeating-digit numbers such as 11, 111, 222, etc. 
+It is particularly useful in mental math, educational tools, and constrained computational environments. 
+The algorithm decomposes multiplication into a sequence of digit-wise operations, zero padding, sliding window sums, and a specialized carry-forward mechanism.
+
+---
+
+**Input Definitions:**
+
+* Let **n** be the input number (e.g., 123).
+* Let **b** be the repeating digit multiplier (e.g., 222).
+* Let **k** be the number of digits in the multiplier **b** (e.g., for 222, k = 3; for 1111, k = 4).
+
+---
+
+**Steps of the AUD\&CMA:**
+
+1. **Multiply each digit of n by the base digit of b**
+
+   * Example: If n = 123 and b = 222 (which is 2 repeated 3 times), multiply each digit of 123 by 2 → \[2, 4, 6].
+
+2. **Pad the result with k-1 zeros on both sides**
+
+   * For k = 3 → pad with two zeros left and right.
+   * Result: \[0, 0, 2, 4, 6, 0, 0]
+
+3. **Compute sliding window sums of k digits**
+
+   * Slide across the padded list and compute sums:
+
+     * 0+0+2 = 2
+     * 0+2+4 = 6
+     * 2+4+6 = 12
+     * 4+6+0 = 10
+     * 6+0+0 = 6
+   * Intermediate result: \[2, 6, 12, 10, 6]
+
+4. **Carry tens digit left (Right-to-Left Carrying)**
+
+   * Start from the right:
+
+     * Keep the leftmost digit **as is** regardless of length.
+     * For each other digit: extract unit digit, carry tens digit left.
+     * Carry propagates leftward:
+
+       * \[2, 6, 12, 10, 6] → \[2, 6, 12+1, 0, 6]
+       * → \[2, 6, 13, 0, 6]
+       * → \[2, 7, 3, 0, 6]
+
+5. **Combine digits left-to-right**
+
+   * Final result: 27306
+
+---
+
+**Important Note:**
+
+> The leftmost value will be written as is, regardless of how many digits it has. All other values must be reduced to **single digits** (unit digit only). If a value is a multiple of 10 or greater, the tens digit is carried to the immediate left digit.
+
+---
+
+**Use Cases:**
+
+* Multiplication by numbers like 11, 111, 222...
+* Mental arithmetic techniques
+* Educational visualizations for elementary math
+* Embedded low-power processors without complex multiplication logic
+
+---
+
+**Example:**
+
+* n = 123, b = 222, k = 3
+* Step-by-step: 123 → \[2,4,6] → pad → \[0,0,2,4,6,0,0] → slide sum → \[2,6,12,10,6] → carry → \[2,7,3,0,6] → combine → **27306**
