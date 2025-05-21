@@ -1,0 +1,43 @@
+# Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA)
+
+def audcma(n: int, b: int) -> int:
+    """
+    Multiply an integer `n` by a repeating-digit multiplier `b` using
+    the Drag-and-Carry Multiplication Algorithm.
+
+    Args:
+        n (int): The number to multiply (e.g. 547)
+        b (int): A multiplier of the form m * (10^k - 1) // 9 (e.g. 222)
+
+    Returns:
+        int: The final result after applying drag-and-carry
+    """
+    # Step 1: Extract base multiplier m and window size k
+    b_str = str(b)
+    k = len(b_str)
+    m = int(b_str[0])  # assumes b is like 222, 3333, etc.
+
+    # Step 2: Multiply each digit of n by m
+    n_digits = [int(d) * m for d in str(n)]
+
+    # Step 3: Pad with (k-1) zeros on both sides
+    pad = [0] * (k - 1)
+    padded = pad + n_digits + pad
+
+    # Step 4: Sliding window summation
+    windows = [sum(padded[i:i+k]) for i in range(len(padded) - k + 1)]
+
+    # Step 5: Apply Drag-and-Carry (right to left)
+    result = windows[:]
+    for i in reversed(range(1, len(result))):
+        carry = result[i] // 10
+        result[i] %= 10
+        result[i - 1] += carry
+
+    # Step 6: Flatten result
+    return int(''.join(str(x) for x in result))
+
+
+# Optional test case
+if __name__ == "__main__":
+    print("547 × 222 =", audcma(547, 222))  # Should print: 121434
