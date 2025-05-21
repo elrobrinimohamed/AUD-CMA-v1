@@ -1,6 +1,6 @@
 # Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA)
 
-The **Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA)** introduces a novel way to perform multiplication using digit-wise scalar operations, symmetric zero-padding, a sliding summation window, and a unique carry-forward mechanism. It's designed to be educational, algorithmically elegant, and efficient for low-complexity computation.
+The **Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA)** introduces a novel method for digit-wise multiplication using structured positional padding, non-traditional base multipliers, and a unique carry rule. Its hybrid approach blends convolutional patterns with simplified mental math, making it distinct from known multiplication methods in both theory and application.
 
 ---
 
