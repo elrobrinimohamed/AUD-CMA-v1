@@ -1,15 +1,41 @@
-# Ahmet-Ulucay-Drag-and-Carry-Multiplication-Algorithm-AUD&CMA-
+# Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA)
 
-Description:
+The **Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA)** introduces a novel way to perform multiplication using digit-wise scalar operations, symmetric zero-padding, a sliding summation window, and a unique carry-forward mechanism. It's designed to be educational, algorithmically elegant, and efficient for low-complexity computation.
 
-The AUD&CMA is a digit-wise multiplication method for efficiently computing the product of any integer with repeating-digit numbers such as 11, 111, 222, etc. 
-It is particularly useful in mental math, educational tools, and constrained computational environments. 
-The algorithm decomposes multiplication into a sequence of digit-wise operations, zero padding, sliding window sums, and a specialized carry-forward mechanism.
+---
+
+## 🔢 Core Idea
+
+Given an input number `n` and a multiplier `b` (like `222`, `111`, or `33`), the algorithm follows these steps:
+
+1. **Multiply** each digit of `n` by the scalar `m`, where `b = m × 111...1` (length = `k`)
+2. **Pad** the digit list with `k - 1` zeros on both ends
+3. **Slide** a window of size `k` over the padded array and sum each window
+4. **Apply Drag-and-Carry**, keeping only single-digit values (except the leftmost value, which can be multi-digit)
+5. **Join the result** to get the final answer
+
+---
+
+## 📘 Example
+
+Multiply: `547 × 222`
+
+- `m = 2`, `k = 3`
+- Multiply digits: `[5, 4, 7] × 2 → [10, 8, 14]`
+- Pad: `[0, 0, 10, 8, 14, 0, 0]`
+- Slide window size 3 → Sums: `[10, 18, 32, 22, 14]`
+- Apply Drag-and-Carry → `[12, 1, 4, 3, 4]`
+- Final Result: `121434`
+
+---
+
+## 📂 Structure
 
 
-Use Cases:
 
-* Multiplication by numbers like 11, 111, 222...
-* Mental arithmetic techniques
-* Educational visualizations for elementary math
-* Embedded low-power processors without complex multiplication logic
+## Use Cases:
+
+- Multiplication by numbers like 11, 111, 222...
+- Mental arithmetic techniques
+- Educational visualizations for elementary math
+- Embedded low-power processors without complex multiplication logic
