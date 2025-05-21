@@ -1,78 +1,50 @@
-**Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD\&CMA)**
+📄 Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA)
 
----
+Abstract:
+The Ahmet Ulucay Drag-and-Carry Multiplication Algorithm (AUD&CMA) is a digit-based multiplication technique that decomposes any base-10 multiplication into a series of digit-wise scalar multiplications, symmetrical zero-padding, sliding-window summation, and a specialized carry-forward mechanism. The leftmost digit is preserved in its complete form while all others are reduced to single digits through a cascading carry operation.
 
-**Description:**
-The AUD\&CMA is a digit-wise multiplication method for efficiently computing the product of any integer with repeating-digit numbers such as 11, 111, 222, etc. 
-It is particularly useful in mental math, educational tools, and constrained computational environments. 
-The algorithm decomposes multiplication into a sequence of digit-wise operations, zero padding, sliding window sums, and a specialized carry-forward mechanism.
+1. Technical Field
+This algorithm relates to the field of arithmetic computation, digital signal processing, and efficient multiplication techniques suitable for low-complexity processors, educational tools, and novel computing architectures.
 
----
+2. Background
+Traditional long multiplication or Karatsuba’s algorithm involves complex digit placement and recursive logic. 
+AUD&CMA simplifies this by using consistent padding and a structured window summation, offering advantages in clarity, implementation, and pedagogical use.
 
-**Input Definitions:**
+3. Summary of the Invention
+The invention introduces:
+* A digit-wise multiplication method
+* Zero-padding based on a digit-length parameter `k`
+* A sliding window of size `k` across a padded digit list
+* A drag-and-carry mechanism that enforces single-digit output except at the leftmost position
 
-* Let **n** be the input number (e.g., 123).
-* Let **b** be the repeating digit multiplier (e.g., 222).
-* Let **k** be the number of digits in the multiplier **b** (e.g., for 222, k = 3; for 1111, k = 4).
+4. Algorithm Description
+Inputs:
+* `n`: an integer number to be multiplied
+* `b`: a multiplier composed of repeated digits (e.g., `222`)
+* `k`: digit-length of `b` (inferred or given)
+* `m`: base multiplier such that `b = m × 111...1` (`k` times)
 
----
+Process:
+1. Decompose `n` into digits and multiply each by `m`
+2. Pad `(k−1)` zeros on both left and right
+3. Slide a window of size `k` across the padded list
+4. Sum each window to get intermediate results
+5. Apply drag-and-carry from right to left, preserving the leftmost digit in full form
+6. Flatten final values to obtain output number
 
-**Steps of the AUD\&CMA:**
+Output:
+A base-10 number representing the product `n × b`.
 
-1. **Multiply each digit of n by the base digit of b**
+5. Example
+`n = 547`, `b = 222` → `k = 3`, `m = 2`
 
-   * Example: If n = 123 and b = 222 (which is 2 repeated 3 times), multiply each digit of 123 by 2 → \[2, 4, 6].
+1. [5, 4, 7] × 2 = [10, 8, 14]
+2. Padded: [0, 0, 10, 8, 14, 0, 0]
+3. Windows: [10, 18, 32, 22, 14]
+4. Carry: [12, 1, 4, 3, 4] → `121434`
 
-2. **Pad the result with k-1 zeros on both sides**
-
-   * For k = 3 → pad with two zeros left and right.
-   * Result: \[0, 0, 2, 4, 6, 0, 0]
-
-3. **Compute sliding window sums of k digits**
-
-   * Slide across the padded list and compute sums:
-
-     * 0+0+2 = 2
-     * 0+2+4 = 6
-     * 2+4+6 = 12
-     * 4+6+0 = 10
-     * 6+0+0 = 6
-   * Intermediate result: \[2, 6, 12, 10, 6]
-
-4. **Carry tens digit left (Right-to-Left Carrying)**
-
-   * Start from the right:
-
-     * Keep the leftmost digit **as is** regardless of length.
-     * For each other digit: extract unit digit, carry tens digit left.
-     * Carry propagates leftward:
-
-       * \[2, 6, 12, 10, 6] → \[2, 6, 12+1, 0, 6]
-       * → \[2, 6, 13, 0, 6]
-       * → \[2, 7, 3, 0, 6]
-
-5. **Combine digits left-to-right**
-
-   * Final result: 27306
-
----
-
-**Important Note:**
-
-> The leftmost value will be written as is, regardless of how many digits it has. All other values must be reduced to **single digits** (unit digit only). If a value is a multiple of 10 or greater, the tens digit is carried to the immediate left digit.
-
----
-
-**Use Cases:**
-
-* Multiplication by numbers like 11, 111, 222...
-* Mental arithmetic techniques
-* Educational visualizations for elementary math
-* Embedded low-power processors without complex multiplication logic
-
----
-
-**Example:**
-
-* n = 123, b = 222, k = 3
-* Step-by-step: 123 → \[2,4,6] → pad → \[0,0,2,4,6,0,0] → slide sum → \[2,6,12,10,6] → carry → \[2,7,3,0,6] → combine → **27306**
+...
+Important Note:
+The leftmost value will be written as is, regardless of how many digits it has. 
+All other values must be reduced to *single digits* (unit digit only). 
+If a value is a multiple of 10 or greater, the tens digit is carried to the immediate left digit.
