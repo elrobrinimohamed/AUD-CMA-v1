@@ -15,7 +15,7 @@ The invention introduces:
 * A digit-wise multiplication method
 * Zero-padding based on a digit-length parameter `k`
 * A sliding window of size `k` across a padded digit list
-* A drag-and-carry mechanism that enforces single-digit output except at the leftmost position
+* A drag-and-carry mechanism that enforces single-digit output except at the 'leftmost position' (Note-1)
 
 4. Algorithm Description
 Inputs:
@@ -26,7 +26,7 @@ Inputs:
 
 Process:
 1. Decompose `n` into digits and multiply each by `m`
-2. Pad `(k−1)` zeros on both left and right
+2. Pad `(k−1)` zeros on both left and right (Note-2)
 3. Slide a window of size `k` across the padded list
 4. Sum each window to get intermediate results
 5. Apply drag-and-carry from right to left, preserving the leftmost digit in full form
@@ -44,7 +44,14 @@ A base-10 number representing the product `n × b`.
 4. Carry: [12, 1, 4, 3, 4] → `121434`
 
 ...
-Important Note:
-The leftmost value will be written as is, regardless of how many digits it has. 
+
+Important Notes:
+1.The leftmost value will be written as is, regardless of how many digits it has. 
 All other values must be reduced to *single digits* (unit digit only). 
 If a value is a multiple of 10 or greater, the tens digit is carried to the immediate left digit.
+
+2.The step of padding a digit list with k - 1 zeros on both the left and right ends in preparation 
+for digit-wise summation within the AUD&CMA (Ahmet Ulucay Drag-and-Carry Multiplication Algorithm) 
+is an original innovation. While it draws conceptual inspiration from zero-padding in convolution operations 
+used in digital signal processing and polynomial multiplication, this specific rule is not present in 
+classical multiplication algorithms and contributes a novel structural step to integer multiplication methodologies.
